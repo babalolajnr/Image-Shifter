@@ -18,9 +18,6 @@ fn main() {
 
     let action = config.action.to_uppercase();
 
-    // if action == "GRAYSCALE".to_owned() {
-    //     convert_to_grayscale(&config.input);
-    // }
     match action.as_str() {
         "GRAYSCALE" => convert_to_grayscale(&config.input),
         "BRIGHTEN" => brighten_image(&config.input),
@@ -29,35 +26,23 @@ fn main() {
 }
 /// Convert input to grayscale
 fn convert_to_grayscale(input: &String) {
-    let decoded_input = Reader::open(input).unwrap().decode().unwrap();
-    let user_dirs = UserDirs::new().unwrap();
-    let document_dir = user_dirs
-        .document_dir()
-        .unwrap()
-        .as_os_str()
-        .to_str()
-        .unwrap();
+    let (decoded_input, output_path) = process_input(input);
 
-    let output_path = &mut str::replace(document_dir, r#"\"#, "/").to_owned();
-
-    let filename = Path::new(&input).file_name().unwrap().to_str().unwrap();
-
-    output_path.push_str("/Image Shifter/");
-    if !Path::new(&output_path).exists() {
-        create_dir_all(&output_path).unwrap()
-    }
-
-    output_path.push_str(filename);
-    let output_path = output_path.as_str();
-
-    let output_path = String::from(output_path);
     imageops::grayscale(&decoded_input)
         .save(&output_path)
         .unwrap(); // unwrap and check for exception
     println!("Conversion successful. '{}'", output_path)
 }
-
+/// Brighten input
 fn brighten_image(input: &String) {
+    let (decoded_input, output_path) = process_input(input);
+    imageops::brighten(&decoded_input, 1)
+        .save(&output_path)
+        .unwrap(); // unwrap and check for exception
+    println!("Conversion successful. '{}'", output_path)
+}
+
+fn process_input(input: &String) -> (image::DynamicImage, std::string::String) {
     let decoded_input = Reader::open(input).unwrap().decode().unwrap();
     let user_dirs = UserDirs::new().unwrap();
     let document_dir = user_dirs
@@ -79,12 +64,7 @@ fn brighten_image(input: &String) {
     output_path.push_str(filename);
     let output_path = output_path.as_str();
 
-    let output_path = String::from(output_path);
-
-    imageops::brighten(&decoded_input, 1)
-        .save(&output_path)
-        .unwrap(); // unwrap and check for exception
-    println!("Conversion successful. '{}'", output_path)
+    (decoded_input, String::from(output_path))
 }
 
 struct Config {
