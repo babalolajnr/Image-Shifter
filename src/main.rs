@@ -1,8 +1,8 @@
-mod converter;
 mod config;
+mod converter;
 
-use crate::converter::Converter;
-use crate::config::Config;
+use config::Config;
+use converter::Converter;
 use std::env;
 
 // use image::GenericImageView;
@@ -24,4 +24,3 @@ fn main() {
         _ => panic!("Action is not available"),
     }
 }
-
