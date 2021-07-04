@@ -11,60 +11,77 @@ use image::io::Reader;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    // cargo run convert input to output grayscale
+    // cargo run convert input output grayscale
     let input: &String = &args[2];
-    let action: &String = &args[4];
+    let action: &String = &args[3];
     let config = Config::new(input.to_owned(), action.to_owned());
 
     let action = config.action.to_uppercase();
 
+    let converter = Converter::new(config.input);
+
     match action.as_str() {
-        "GRAYSCALE" => convert_to_grayscale(&config.input),
-        "BRIGHTEN" => brighten_image(&config.input),
+        "GRAYSCALE" => converter.convert_to_grayscale(),
+        "BRIGHTEN" => converter.brighten_image(),
         _ => panic!("Action is not available"),
     }
 }
-/// Convert input to grayscale
-fn convert_to_grayscale(input: &String) {
-    let (decoded_input, output_path) = process_input(input);
 
-    imageops::grayscale(&decoded_input)
-        .save(&output_path)
-        .unwrap(); // unwrap and check for exception
-    println!("Conversion successful. '{}'", output_path)
-}
-/// Brighten input
-fn brighten_image(input: &String) {
-    let (decoded_input, output_path) = process_input(input);
-    imageops::brighten(&decoded_input, 1)
-        .save(&output_path)
-        .unwrap(); // unwrap and check for exception
-    println!("Conversion successful. '{}'", output_path)
+struct Converter {
+    decoded_input: image::DynamicImage,
+    output_path: String,
 }
 
-fn process_input(input: &String) -> (image::DynamicImage, std::string::String) {
-    let decoded_input = Reader::open(input).unwrap().decode().unwrap();
-    let user_dirs = UserDirs::new().unwrap();
-    let document_dir = user_dirs
-        .document_dir()
-        .unwrap()
-        .as_os_str()
-        .to_str()
-        .unwrap();
+impl Converter {
+    fn new(input: String) -> Self {
+        let decoded_input = Reader::open(&input).unwrap().decode().unwrap();
+        let user_dirs = UserDirs::new().unwrap();
+        let document_dir = user_dirs
+            .document_dir()
+            .unwrap()
+            .as_os_str()
+            .to_str()
+            .unwrap();
 
-    let output_path = &mut str::replace(document_dir, r#"\"#, "/").to_owned();
+        let output_path = &mut str::replace(document_dir, r#"\"#, "/").to_owned();
 
-    let filename = Path::new(&input).file_name().unwrap().to_str().unwrap();
+        let filename = Path::new(&input).file_name().unwrap().to_str().unwrap();
 
-    output_path.push_str("/Image Shifter/");
-    if !Path::new(&output_path).exists() {
-        create_dir_all(&output_path).unwrap()
+        output_path.push_str("/Image Shifter/");
+        if !Path::new(&output_path).exists() {
+            create_dir_all(&output_path).unwrap()
+        }
+
+        output_path.push_str(filename);
+        let output_path = output_path.as_str();
+
+        Self {
+            decoded_input,
+            output_path: output_path.to_string(),
+        }
     }
 
-    output_path.push_str(filename);
-    let output_path = output_path.as_str();
+    /// Brighten input
+    fn brighten_image(&self) {
+        let decoded_input = &self.decoded_input;
+        let output_path = &self.output_path;
 
-    (decoded_input, String::from(output_path))
+        imageops::brighten(decoded_input, 1)
+            .save(&output_path)
+            .unwrap(); // unwrap and check for exception
+        println!("Conversion successful. '{}'", output_path)
+    }
+
+    /// Convert input to grayscale
+    fn convert_to_grayscale(&self) {
+        let decoded_input = &self.decoded_input;
+        let output_path = &self.output_path;
+
+        imageops::grayscale(decoded_input)
+            .save(&output_path)
+            .unwrap(); // unwrap and check for exception
+        println!("Conversion successful. '{}'", output_path)
+    }
 }
 
 struct Config {
@@ -77,14 +94,3 @@ impl Config {
         Self { input, action }
     }
 }
-
-// enum Actions {
-//     Grayscale
-// }
-
-// impl Actions {
-//     /// Returns `true` if the actions is [`Grayscale`].
-//     fn is_grayscale(&self) -> bool {
-//         matches!(self, Self::Grayscale)
-//     }
-// }
