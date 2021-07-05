@@ -1,13 +1,13 @@
-## Image-Shifter
+# Image-Shifter
 
 Manipulate images from the terminal
 
-# Notice
+## Notice
 This is still very much in development and many things will not work properly😊
 
-# Actions
+## Actions
 1. Grayscale
 2. Brighten
-# Commands
+## Commands
 
 `cargo run convert <filename> <action>`
