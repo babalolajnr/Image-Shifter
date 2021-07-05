@@ -1,3 +1,4 @@
+use image::ImageError;
 use std::fs::create_dir_all;
 use std::path::Path;
 use std::str;
@@ -41,24 +42,20 @@ impl Converter {
     }
 
     /// Brighten input
-    pub fn brighten_image(&self) {
+    pub fn brighten_image(&self) -> Result<String, ImageError> {
         let decoded_input = &self.decoded_input;
         let output_path = &self.output_path;
 
-        imageops::brighten(decoded_input, 1)
-            .save(&output_path)
-            .unwrap(); // unwrap and check for exception
-        println!("Conversion successful. '{}'", output_path)
+        imageops::brighten(decoded_input, 1).save(&output_path)?;
+        Ok(output_path.to_string())
     }
 
     /// Convert input to grayscale
-    pub fn convert_to_grayscale(&self) {
+    pub fn convert_to_grayscale(&self) -> Result<String, ImageError> {
         let decoded_input = &self.decoded_input;
         let output_path = &self.output_path;
 
-        imageops::grayscale(decoded_input)
-            .save(&output_path)
-            .unwrap(); // unwrap and check for exception
-        println!("Conversion successful. '{}'", output_path)
+        imageops::grayscale(decoded_input).save(&output_path)?;
+        Ok(output_path.to_string())
     }
 }
