@@ -1,0 +1,1 @@
+pub const OUTPUT_DIR: &str = "/Image-Shifter/";
