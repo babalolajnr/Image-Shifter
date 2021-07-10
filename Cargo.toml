@@ -9,3 +9,4 @@ edition = "2018"
 image = "0.23.14"
 num-complex = "0.4.0"
 directories = "3.0.2"
+structopt = { version = "0.3" }
