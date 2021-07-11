@@ -7,11 +7,19 @@ pub struct Opt {
     #[structopt(subcommand)]
     pub action: Action,
 
-    #[structopt(help = "Pass in the path to the image to be manipulated")]
+    #[structopt(help = "Path to the image to be manipulated")]
     pub input: String,
 }
 
 #[derive(Debug, StructOpt)]
 pub enum Action {
     Grayscale,
+    Brighten {
+        #[structopt(
+            help = "Amount to brighten each pixel by. Negative values decrease the brightness and positive values increase it.",
+            short,
+            long
+        )]
+        value: i32,
+    },
 }
