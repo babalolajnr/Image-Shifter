@@ -22,11 +22,12 @@ target\debug\rust-image-processor.exe <input> <action>
 2. Brighten
 ## Commands
 ### Grayscale
+Convert image to black and white.
 ```bash
 target\debug\rust-image-processor.exe <input> grayscale 
 ```
 ### Brighten
-
+Change image brightness.
 ```bash
 target\debug\rust-image-processor.exe <input> brighten <value> 
 ```
