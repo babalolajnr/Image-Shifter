@@ -53,11 +53,11 @@ impl Converter {
     }
 
     /// Brighten input
-    pub fn brighten_image(&self) -> Result<String, ImageError> {
+    pub fn brighten_image(&self, value: i32) -> Result<String, ImageError> {
         let decoded_input: &DynamicImage = &self.decoded_input;
         let output_path: &String = &self.output_path;
 
-        imageops::brighten(decoded_input, 1).save(&output_path)?;
+        imageops::brighten(decoded_input, value).save(&output_path)?;
         Ok(output_path.to_string())
     }
 
@@ -69,4 +69,5 @@ impl Converter {
         imageops::grayscale(decoded_input).save(&output_path)?;
         Ok(output_path.to_string())
     }
+
 }
