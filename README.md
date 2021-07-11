@@ -6,6 +6,8 @@ Manipulate images from the terminal
   - [How to use](#how-to-use)
   - [Actions](#actions)
   - [Commands](#commands)
+    - [Grayscale](#grayscale)
+    - [Brighten](#brighten)
 ## Notice
 This is still very much in development and many things will not work properly😊
 
@@ -19,11 +21,11 @@ target\debug\rust-image-processor.exe <input> <action>
 1. Grayscale
 2. Brighten
 ## Commands
-Grayscale
+### Grayscale
 ```bash
 target\debug\rust-image-processor.exe <input> grayscale 
 ```
-Brighten
+### Brighten
 
 ```bash
 target\debug\rust-image-processor.exe <input> brighten <value> 
