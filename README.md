@@ -29,6 +29,6 @@ target\debug\rust-image-processor.exe <input> grayscale
 ### Brighten
 Change image brightness.
 ```bash
-target\debug\rust-image-processor.exe <input> brighten <value> 
+target\debug\rust-image-processor.exe <input> brighten --value <value> 
 ```
 the `value` parameter is the amount to brighten each pixel by. Negative values decrease the brightness and positive values increase it. 
