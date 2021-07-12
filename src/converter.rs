@@ -53,19 +53,25 @@ impl Converter {
     }
 
     /// Brighten input
-    pub fn brighten_image(&self, value: i32) -> Result<String, ImageError> {
+    pub fn brighten(&self, value: i32) -> Result<String, ImageError> {
         imageops::brighten(&self.decoded_input, value).save(&self.output_path)?;
         Ok(self.output_path.to_string())
     }
 
     /// Convert input to grayscale
-    pub fn convert_to_grayscale(&self) -> Result<String, ImageError> {
+    pub fn grayscale(&self) -> Result<String, ImageError> {
         imageops::grayscale(&self.decoded_input).save(&self.output_path)?;
         Ok(self.output_path.to_string())
     }
 
-    pub fn huerotate_image(&self, value: i32) -> Result<String, ImageError> {
+    /// Huerotate input
+    pub fn huerotate(&self, value: i32) -> Result<String, ImageError> {
         imageops::huerotate(&self.decoded_input, value).save(&self.output_path)?;
+        Ok(self.output_path.to_string())
+    }
+
+    pub fn contrast(&self, contrast: f32) -> Result<String, ImageError> {
+        imageops::contrast(&self.decoded_input, contrast).save(&self.output_path)?;
         Ok(self.output_path.to_string())
     }
 }
