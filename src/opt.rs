@@ -29,5 +29,13 @@ pub enum Action {
             long
         )]
         value: i32,
+    },
+    Contrast {
+        #[structopt(
+            help = "Amount to adjust the contrast by. Negative values decrease the contrast and positive values increase the contrast.",
+            short,
+            long
+        )]
+        value: f32,
     }
 }
