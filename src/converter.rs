@@ -54,20 +54,18 @@ impl Converter {
 
     /// Brighten input
     pub fn brighten_image(&self, value: i32) -> Result<String, ImageError> {
-        let decoded_input: &DynamicImage = &self.decoded_input;
-        let output_path: &String = &self.output_path;
-
-        imageops::brighten(decoded_input, value).save(&output_path)?;
-        Ok(output_path.to_string())
+        imageops::brighten(&self.decoded_input, value).save(&self.output_path)?;
+        Ok(self.output_path.to_string())
     }
 
     /// Convert input to grayscale
     pub fn convert_to_grayscale(&self) -> Result<String, ImageError> {
-        let decoded_input: &DynamicImage = &self.decoded_input;
-        let output_path: &String = &self.output_path;
-
-        imageops::grayscale(decoded_input).save(&output_path)?;
-        Ok(output_path.to_string())
+        imageops::grayscale(&self.decoded_input).save(&self.output_path)?;
+        Ok(self.output_path.to_string())
     }
 
+    pub fn huerotate_image(&self, value: i32) -> Result<String, ImageError> {
+        imageops::huerotate(&self.decoded_input, value).save(&self.output_path)?;
+        Ok(self.output_path.to_string())
+    }
 }
