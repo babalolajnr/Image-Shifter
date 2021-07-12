@@ -9,6 +9,7 @@ Manipulate images from the terminal
     - [Grayscale](#grayscale)
     - [Brighten](#brighten)
     - [Huerotate](#huerotate)
+    - [Contrast](#contrast)
 ## Notice
 This is still very much in development and many things will not work properly😊
 
@@ -37,4 +38,10 @@ target\debug\rust-image-processor.exe <input> brighten --value <value>
 Hue rotate the supplied image. `value` is the degrees to rotate each pixel by. 0 and 360 do nothing, the rest rotates by the given degree value. just like the css webkit filter hue-rotate(180).
 ```bash
 target\debug\rust-image-processor.exe <input> huerotate --value <value> 
+```
+### Contrast
+Adjust the contrast of the supplied image. `contrast` is the amount to adjust the contrast by. Negative values decrease the contrast and positive values increase the contrast.
+
+```bash
+target\debug\rust-image-processor.exe <input> contrast --contrast <value> 
 ```
