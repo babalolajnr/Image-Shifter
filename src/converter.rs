@@ -75,3 +75,17 @@ impl Converter {
         Ok(self.output_path.to_string())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_converter_returns_decoded_image() {
+        let input = r"C:\Users\User\Downloads\cosmonaut_astronaut_space_suit_137404_3840x2400.jpg";
+        let converter = Converter::new(input.to_string());
+
+        let decoded_input: DynamicImage = Reader::open(&input).unwrap().decode().unwrap();
+
+        assert_eq!(converter.decoded_input, decoded_input);
+    }
+}
