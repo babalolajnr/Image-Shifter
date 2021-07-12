@@ -8,6 +8,7 @@ Manipulate images from the terminal
   - [Commands](#commands)
     - [Grayscale](#grayscale)
     - [Brighten](#brighten)
+    - [Huerotate](#huerotate)
 ## Notice
 This is still very much in development and many things will not work properly😊
 
@@ -27,8 +28,13 @@ Convert image to black and white.
 target\debug\rust-image-processor.exe <input> grayscale 
 ```
 ### Brighten
-Change image brightness.
+Brighten the supplied image. `value` is the amount to brighten each pixel by. Negative values decrease the brightness and positive values increase it.
 ```bash
 target\debug\rust-image-processor.exe <input> brighten --value <value> 
+``` 
+
+### Huerotate
+Hue rotate the supplied image. `value` is the degrees to rotate each pixel by. 0 and 360 do nothing, the rest rotates by the given degree value. just like the css webkit filter hue-rotate(180).
+```bash
+target\debug\rust-image-processor.exe <input> huerotate --value <value> 
 ```
-the `value` parameter is the amount to brighten each pixel by. Negative values decrease the brightness and positive values increase it. 
