@@ -22,4 +22,12 @@ pub enum Action {
         )]
         value: i32,
     },
+    Huerotate {
+        #[structopt(
+            help = "Amount of degrees to rotate each pixel by. 0 and 360 do nothing",
+            short,
+            long
+        )]
+        value: i32,
+    }
 }
