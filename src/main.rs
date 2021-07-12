@@ -12,9 +12,10 @@ fn main() {
     let converter: Converter = Converter::new(opt.input);
 
     let output_path: Result<String, image::ImageError> = match opt.action {
-        Action::Brighten { value } => converter.brighten_image(value),
-        Action::Grayscale => converter.convert_to_grayscale(),
-        Action::Huerotate { value } => converter.huerotate_image(value),
+        Action::Brighten { value } => converter.brighten(value),
+        Action::Grayscale => converter.grayscale(),
+        Action::Huerotate { value } => converter.huerotate(value),
+        Action::Contrast { value } => converter.contrast(value),
     };
 
     println!(
