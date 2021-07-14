@@ -70,8 +70,18 @@ impl Converter {
         Ok(self.output_path.to_string())
     }
 
+    /// Adjust contrast
     pub fn contrast(&self, contrast: f32) -> Result<String, ImageError> {
         imageops::contrast(&self.decoded_input, contrast).save(&self.output_path)?;
+        Ok(self.output_path.to_string())
+    }
+
+    /// Crop image
+    pub fn crop(self, x: u32, y: u32, width: u32, height: u32) -> Result<String, ImageError> {
+        let mut image = self.decoded_input;
+        imageops::crop(&mut image, x, y, width, height)
+            .to_image()
+            .save(&self.output_path)?;
         Ok(self.output_path.to_string())
     }
 }
