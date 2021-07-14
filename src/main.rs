@@ -16,6 +16,12 @@ fn main() {
         Action::Grayscale => converter.grayscale(),
         Action::Huerotate { value } => converter.huerotate(value),
         Action::Contrast { value } => converter.contrast(value),
+        Action::Crop {
+            x,
+            y,
+            width,
+            height,
+        } => converter.crop(x, y, width, height),
     };
 
     println!(
