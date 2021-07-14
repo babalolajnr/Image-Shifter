@@ -37,5 +37,15 @@ pub enum Action {
             long
         )]
         value: f32,
-    }
+    },
+    Crop {
+        #[structopt(help = "position of the top left corner on the x-axis", short, long)]
+        x: u32,
+        #[structopt(help = "position of the top left corner on the y-axis", short, long)]
+        y: u32,
+        #[structopt(help = "width of cropped image", short, long)]
+        width: u32,
+        #[structopt(help = "height of cropped image", short, long)]
+        height: u32,
+    },
 }
