@@ -4,12 +4,12 @@ Manipulate images from the terminal
 - [Image-Shifter](#image-shifter)
   - [Notice](#notice)
   - [How to use](#how-to-use)
-  - [Actions](#actions)
   - [Commands](#commands)
     - [Grayscale](#grayscale)
     - [Brighten](#brighten)
     - [Huerotate](#huerotate)
     - [Contrast](#contrast)
+    - [Crop](#crop)
 ## Notice
 This is still very much in development and many things will not work properly😊
 
@@ -19,9 +19,6 @@ Clone the repository and build the project. The run the excutable generated in t
 ```bash
 target\debug\rust-image-processor.exe <input> <action> 
 ```
-## Actions
-1. Grayscale
-2. Brighten
 ## Commands
 ### Grayscale
 Convert image to black and white.
@@ -44,4 +41,10 @@ Adjust the contrast of the supplied image. `contrast` is the amount to adjust th
 
 ```bash
 target\debug\rust-image-processor.exe <input> contrast --contrast <value> 
+```
+### Crop
+Crop image. `height` is the height of the output image. `width` is the width of the output image. `x` is position of the top left corner on the x-axis. `y` is position of the top left corner on the y-axis.
+
+```bash
+target\debug\rust-image-processor.exe <input> crop --height <value> --width <value> --x <value> --y <value>  
 ```
