@@ -9,7 +9,7 @@ use structopt::StructOpt;
 fn main() {
     let opt = Opt::from_args();
 
-    let converter: Converter = Converter::new(opt.input);
+    let converter: Converter = Converter::new(opt.input, opt.output);
 
     let output_path: Result<String, image::ImageError> = match opt.action {
         Action::Brighten { value } => converter.brighten(value),
