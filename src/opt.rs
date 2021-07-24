@@ -9,6 +9,9 @@ pub struct Opt {
 
     #[structopt(help = "Path to the image to be manipulated")]
     pub input: String,
+
+    #[structopt(help = "Path to where output should be stored")]
+    pub output: Option<String>
 }
 
 #[derive(Debug, StructOpt)]
