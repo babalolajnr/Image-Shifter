@@ -14,7 +14,7 @@ pub struct Converter {
 }
 
 impl Converter {
-    pub fn new(input: String) -> Self {
+    pub fn new(input: String, output_path: Option<String>) -> Self {
         // Check if path exists
         if !Path::new(&input).exists() {
             panic!("The input location does not exist, {}", input)
@@ -30,25 +30,35 @@ impl Converter {
             .to_str()
             .unwrap();
 
-        #[cfg(target_os = "windows")]
-        let output_path = &mut str::replace(document_dir, r#"\"#, "/").to_owned();
+        let mut output;
+        //Check if output path is provided
+        if let Some(path) = output_path {
+            output = path;
+        } else {
+            #[cfg(target_os = "windows")]
+            {
+                output = str::replace(document_dir, r#"\"#, "/").to_owned()
+            }
 
-        #[cfg(not(target_os = "windows"))]
-        let output_path = document_dir.to_owned();
+            #[cfg(not(target_os = "windows"))]
+            {
+                output = document_dir.to_owned()
+            }
+        }
 
         let filename: &str = Path::new(&input).file_name().unwrap().to_str().unwrap();
 
-        output_path.push_str(OUTPUT_DIR);
-        if !Path::new(&output_path).exists() {
-            create_dir_all(&output_path).unwrap()
+        output.push_str(OUTPUT_DIR);
+        if !Path::new(&output).exists() {
+            create_dir_all(&output).unwrap()
         }
 
-        output_path.push_str(filename);
-        let output_path = output_path.as_str();
+        output.push_str(filename);
+        // let output_path = output;
 
         Self {
             decoded_input,
-            output_path: output_path.to_string(),
+            output_path: output,
         }
     }
 
@@ -84,6 +94,12 @@ impl Converter {
             .save(&self.output_path)?;
         Ok(self.output_path.to_string())
     }
+
+    pub fn filter3x3(&self) -> Result<String, ImageError> {
+        let kernel = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+        imageops::filter3x3(&self.decoded_input, &kernel).save(&self.output_path)?;
+        Ok(self.output_path.to_string())
+    }
 }
 
 #[cfg(test)]
@@ -91,11 +107,18 @@ mod tests {
     use super::*;
     #[test]
     fn test_converter_returns_decoded_image() {
-        let input = r"C:\Users\User\Downloads\cosmonaut_astronaut_space_suit_137404_3840x2400.jpg";
-        let converter = Converter::new(input.to_string());
+        let input = r"tests\images\test1.jpg";
+        let converter = Converter::new(input.to_string(), Some("/documents".to_string()));
 
         let decoded_input: DynamicImage = Reader::open(&input).unwrap().decode().unwrap();
 
         assert_eq!(converter.decoded_input, decoded_input);
     }
+
+    // fn test_filter3x3() {
+    //     let input = r"tests\images\test1.jpg";
+    //     let converter = Converter::new(input.to_string());
+
+    //     converter.filter3x3();
+    // }
 }
