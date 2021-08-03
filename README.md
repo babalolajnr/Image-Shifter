@@ -11,13 +11,13 @@ Manipulate images from the terminal
     - [Contrast](#contrast)
     - [Crop](#crop)
 ## Notice
-This is still very much in development and many things will not work properly😊
+⚠ Work in progress ⚠
 
 ## How to use
 Clone the repository and build the project. The run the excutable generated in the terminal
 
 ```bash
-target\debug\rust-image-processor.exe <input> <action> 
+target\debug\rust-image-processor.exe <input> [output] <action> 
 ```
 ## Commands
 ### Grayscale
