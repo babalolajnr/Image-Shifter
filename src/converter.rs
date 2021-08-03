@@ -108,11 +108,17 @@ mod tests {
     #[test]
     fn test_converter_returns_decoded_image() {
         let input = r"tests\images\test1.jpg";
-        let converter = Converter::new(input.to_string(), Some("/documents".to_string()));
+        let converter = Converter::new(input.to_string(), Some("tests/output".to_string()));
 
         let decoded_input: DynamicImage = Reader::open(&input).unwrap().decode().unwrap();
-
         assert_eq!(converter.decoded_input, decoded_input);
+    }
+
+    fn test_grayscale() {
+        let input = r"tests\images\test1.jpg";
+        let converter = Converter::new(input.to_string(), Some("tests/output".to_string()));
+        converter.grayscale()
+        
     }
 
     // fn test_filter3x3() {
