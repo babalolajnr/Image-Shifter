@@ -121,10 +121,4 @@ mod tests {
         
     }
 
-    // fn test_filter3x3() {
-    //     let input = r"tests\images\test1.jpg";
-    //     let converter = Converter::new(input.to_string());
-
-    //     converter.filter3x3();
-    // }
 }
