@@ -13,6 +13,7 @@ Manipulate images from the terminal
 ## Notice
 ⚠ Work in progress ⚠
 
+
 ## How to use
 Clone the repository and build the project. The run the excutable generated in the terminal
 
